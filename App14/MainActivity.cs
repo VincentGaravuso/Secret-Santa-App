@@ -58,6 +58,7 @@ namespace App14
                 Person addedByNum = new Person(name, number);
                 if (sm.ContainsNumber(p,number) == false)
                 {
+                    //test
                     p.Add(addedByNum);
                     //take out display of number later
                     ((ArrayAdapter)lv.Adapter).Add(count + ". " + name.PadRight(20 - name.Length) + number);
