@@ -10,7 +10,8 @@ namespace App14
     [Activity(Label = "App14", MainLauncher = true, Icon = "@drawable/icon")]
     public class MainActivity : Activity
     {
-        public int resultCode = 100;
+        public int resultCodeAddByNumber = 100;
+        public int resultCodeAddByContact = 200;
         List<Person> p = new List<Person>();
         SecretSantaManager sm = new SecretSantaManager();
         ArrayAdapter ad;
@@ -42,21 +43,21 @@ namespace App14
         }
         private void AddFromContacts_Click(object sender, System.EventArgs e)
         {
-            StartActivity(typeof(AddFromContactsActivity));
+            StartActivityForResult(typeof(AddFromContactsActivity), resultCodeAddByContact);
         }
         private void AddByNum_Click(object sender, System.EventArgs e)
         {
-            StartActivityForResult(typeof(AddByNumberActivity), resultCode);
+            StartActivityForResult(typeof(AddByNumberActivity), resultCodeAddByNumber);
         }
         protected override void OnActivityResult(int requestCode, Result resultCode, Intent data)
         {
-            if (resultCode == Result.Ok && requestCode == 100)
+            if (resultCode == Result.Ok)
             {
                 count++;
                 string name = data.GetStringExtra("name");
                 string number = data.GetStringExtra("number");
                 Person addedByNum = new Person(name, number);
-                if (sm.ContainsNumber(p,number) == false)
+                if (sm.ContainsNumber(p, number) == false)
                 {
                     //test
                     p.Add(addedByNum);
@@ -76,13 +77,14 @@ namespace App14
 
                     alert.Show();
                 }
-                
+
 
                 //jesse code
                 //Person p2 = JsonConvert.DeserializeObject<Person>(data.GetStringExtra("person"));
                 //p.Add(p2);
                 //((ArrayAdapter)lv.Adapter).Add(p2);
             }
+
         }
 
         //private void LoadList_Click(object sender, System.EventArgs e)
@@ -93,4 +95,3 @@ namespace App14
 
     }
 }
-
