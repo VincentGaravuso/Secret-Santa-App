@@ -16,16 +16,17 @@ namespace App14
     [Activity(Label = "AddFromContactsActivity")]
     public class AddFromContactsActivity : ListActivity
     {
+        List<string> contactList;
         protected override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
             var uri = ContactsContract.Contacts.ContentUri;
 
-            string[] projection = { ContactsContract.Contacts.InterfaceConsts.Id, ContactsContract.Contacts.InterfaceConsts.DisplayName };
+            string[] projection = { ContactsContract.Contacts.InterfaceConsts.Id, ContactsContract.Contacts.InterfaceConsts.DisplayName, ContactsContract.CommonDataKinds.Phone.Number };
 
             var cursor = ManagedQuery(uri, projection, null, null, null);
 
-            var contactList = new List<string>();
+            contactList = new List<string>();
 
             if (cursor.MoveToFirst())
             {
@@ -37,11 +38,11 @@ namespace App14
             }
 
             ListAdapter = new ArrayAdapter<string>(this, Resource.Layout.ContactItemView, contactList);
+            
         }
-
-        private void BackButton_Click(object sender, EventArgs e)
+        protected override void OnListItemClick(ListView l, View v, int position, long id)
         {
-            this.Finish();
+            contactList[position];
         }
     }
 }
