@@ -12,24 +12,25 @@ using Android.Widget;
 using Twilio.Clients;
 using Twilio.Rest.Api.V2010.Account;
 using Twilio.Types;
+using System.Threading.Tasks;
 
 namespace App14
 {
     class SecretSantaManager
     {
-        
+
         string accountSid = "ACe434dc8f3997138610ed0d0bd791514b";
         string authToken = "27a520804a4dd915e8fd505437ab3c13";
         //public List<Person> person;
 
 
-                
+
         public SecretSantaManager()
         {
             //person = new List<Person>();
             TwilioClient.Init(accountSid, authToken);
         }
-        public bool ContainsNumber(List<Person>p, string num)
+        public bool ContainsNumber(List<Person> p, string num)
         {
             string num2 = "1" + num;
             for (int i = 0; i < p.Count; i++)
@@ -63,7 +64,7 @@ namespace App14
             }
             return false;
         }
-        public bool SendOutSantas(List<Person> p)
+        public async Task<bool> SendOutSantas(List<Person> p)
         {
             if (p.Count > 0)
             {
@@ -85,15 +86,18 @@ namespace App14
                     //    }
                     //}
                     var to = new PhoneNumber("+1" + randomizedList[i].Number);
-                    var message = MessageResource.Create(
-                     to,
-                     from: new PhoneNumber("+16319047273"),
-                     body: randomizedList[i].Name + ", you are " + randomizedList[x].Name + "'s secret santa!");
-                    if(i == randomizedList.Count-1)
+
+                    await Task.Run(() =>
                     {
-                        return true;
-                    }
+                        var message = MessageResource.Create(
+       to,
+       from: new PhoneNumber("+16319047273"),
+       body: randomizedList[i].Name + ", you are " + randomizedList[x].Name + "'s secret santa!");
+                    });
+
+
                 }
+                return true;
             }
             return false;
         }
