@@ -84,17 +84,17 @@ namespace App14
             //if the name and number field is filled out and the number is of standard length, continue
             if (name != null && name != "" && num != null && num != "")
             {
-                if (num.Length == 10 || num.Length == 11)
+                if (num.Length == 10)
                 {
                     return true;
                 }
-                else if(num.Length < 10 || num.Length > 11)
+                else if(num.Length < 10 || num.Length > 10)
                 {
 
                     AlertDialog.Builder dialog = new AlertDialog.Builder(this);
                     AlertDialog alert = dialog.Create();
                     alert.SetTitle("Error");
-                    alert.SetMessage("You must enter a valid number including area code");
+                    alert.SetMessage("You must enter a valid 10 digit number, including area code");
                     alert.SetButton("OK", (c, ev) =>
                     {
                         // 

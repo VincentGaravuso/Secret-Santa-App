@@ -46,11 +46,15 @@ namespace App14
         }
         protected override void OnListItemClick(ListView l, View v, int position, long id)
         {
+            //Takes all extra characters such as () and spaces out of the number
+            string number = phoneList[position];
+            number = new String(number.ToCharArray().Where(c => Char.IsDigit(c)).ToArray());
+
             Intent intent = new Intent();
             intent.PutExtra("name", contactList[position]);
-            intent.PutExtra("number", phoneList[position]);
+            intent.PutExtra("number", number);
             SetResult(Result.Ok, intent);
-            //Android.Widget.Toast.MakeText(this, "Added", ToastLength.Short).Show();
+            Android.Widget.Toast.MakeText(this, "Added", ToastLength.Short).Show();
             this.Finish();
         }
     }

@@ -29,66 +29,73 @@ namespace App14
             //person = new List<Person>();
             TwilioClient.Init(accountSid, authToken);
         }
-
-        //public bool AddPerson(string name, string number)
-        //{
-        //    if (ContainsNumber(number) == true)
-        //    {
-        //        return false;
-        //    }
-        //    Person p1 = new Person(name, number);
-        //    ContainsNumber(number);
-        //    person.Add(p1);
-        //    return true;
-        //}
         public bool ContainsNumber(List<Person>p, string num)
         {
+            string num2 = "1" + num;
             for (int i = 0; i < p.Count; i++)
             {
-                if (p[i].Number == num)
+                if (p[i].Number == num || p[i].Number == num2)
                 {
                     return true;
                 }
             }
             return false;
         }
-        public void SendNotificationToSquad(List<Person> p)
+        public bool SendNotificationToSquad(List<Person> p)
         {
-            string x = "+";
-            for (int i = 0; i < p.Count; i++)
+            if (p.Count > 0)
             {
-                if(p[i].Number.Length < 11)
-                {
-                    x = x + "1";
-                }
-                var to = new PhoneNumber(x + p[i].Number);
-                var message = MessageResource.Create(
-                 to,
-                 from: new PhoneNumber("+16319047273"),
-                 body: "This is the ship that made the Kessel Run in fourteen parsecs?");
 
-                Console.WriteLine(message.Sid);
-            }
-        }
-        public void SendOutSantas(List<Person> p)
-        {
-            List<Person> randomizedList = Randomize<Person>(p);
-            for(int i = 0;i<randomizedList.Count; i++)
-            {
-                //This integer is for the last person in the list to be the first person in the lists santa
-                //befor the loop hits the last person the x integer assigns the person at index i+1 to i
-                int x = i + 1;
-                if(i == randomizedList.Count - 1)
+                string x = "+";
+                for (int i = 0; i < p.Count; i++)
                 {
-                    x = 0;
+                    if (p[i].Number.Length < 11)
+                    {
+                        x = x + "1";
+                    }
+                    var to = new PhoneNumber(x + p[i].Number);
+                    var message = MessageResource.Create(
+                     to,
+                     from: new PhoneNumber("+16319047273"),
+                     body: "This is the ship that made the Kessel Run in fourteen parsecs?");
+                    return true;
                 }
-                //PhoneNumber is a data type provided by twilio
-                var to = new PhoneNumber(randomizedList[i].Number);
-                var message = MessageResource.Create(
-                 to,
-                 from: new PhoneNumber("+16319047273"),
-                 body: randomizedList[i].Name + ", you are " + randomizedList[x].Name + "'s secret santa!");
             }
+            return false;
+        }
+        public bool SendOutSantas(List<Person> p)
+        {
+            if (p.Count > 0)
+            {
+                List<Person> randomizedList = Randomize<Person>(p);
+                for (int i = 0; i < randomizedList.Count; i++)
+                {
+                    //This integer is for the last person in the list to be the first person in the lists santa
+                    //befor the loop hits the last person the x integer assigns the person at index i+1 to i
+                    int x = i + 1;
+                    if (i == randomizedList.Count - 1)
+                    { x = 0; }
+
+                    //string y = "+";
+                    //for (int j = 0; j < p.Count; j++)
+                    //{
+                    //    if (p[j].Number.Length < 11)
+                    //    {
+                    //        y = y + "1";
+                    //    }
+                    //}
+                    var to = new PhoneNumber("+1" + randomizedList[i].Number);
+                    var message = MessageResource.Create(
+                     to,
+                     from: new PhoneNumber("+16319047273"),
+                     body: randomizedList[i].Name + ", you are " + randomizedList[x].Name + "'s secret santa!");
+                    if(i == randomizedList.Count-1)
+                    {
+                        return true;
+                    }
+                }
+            }
+            return false;
         }
         public static List<T> Randomize<T>(List<T> list)
         {
@@ -102,33 +109,5 @@ namespace App14
             }
             return randomizedList;
         }
-        //public void GenerateRandomPeopleAndSend(List<Person> p)
-        //{
-        //    List<Person> randomizedList = new List<Person>();
-        //    Random randomizer = new Random();
-        //    int rIndex = 0;
-
-        //    while (p.Count > 0)
-        //    {
-        //        rIndex = randomizer.Next(0, p.Count);
-        //        randomizedList.Add(p[rIndex]);
-        //        p.RemoveAt(rIndex);
-        //    }
-
-        //    for (int i = 0; i < randomizedList.Count - 1; i++)
-        //    {
-        //        Person num1;
-        //        Person num2;
-        //        num1 = randomizedList[i];
-        //        num2 = randomizedList[i + 1];
-                
-        //        //message
-        //        if (i == randomizedList.Count - 2)
-        //        {
-        //            num1 = randomizedList[0];
-        //            //message
-        //        }
-        //    }
-        //}
     }
 }

@@ -12,6 +12,7 @@ namespace App14
     {
         public int resultCodeAddByNumber = 100;
         public int resultCodeAddByContact = 200;
+        Android.App.ProgressDialog progress;
         List<Person> p = new List<Person>();
         SecretSantaManager sm = new SecretSantaManager();
         ArrayAdapter ad;
@@ -39,7 +40,42 @@ namespace App14
 
         private void Generate_Click(object sender, System.EventArgs e)
         {
-            sm.SendOutSantas(p);
+
+            progress = new Android.App.ProgressDialog(this);
+            progress.Indeterminate = true;
+            progress.SetProgressStyle(Android.App.ProgressDialogStyle.Spinner);
+            progress.SetMessage("Loading... Please wait...");
+            progress.SetCancelable(false);
+            progress.Show();
+
+            AlertDialog.Builder dialog = new AlertDialog.Builder(this);
+            AlertDialog alert = dialog.Create();
+            if (sm.SendOutSantas(p) == true)
+            {
+
+
+                alert.SetTitle("Complete");
+                alert.SetMessage("The Secret Santas have been sent! Don't tell anyone who you have!");
+                alert.SetButton("OK", (c, ev) =>
+                {
+                    // 
+                });
+
+                alert.Show();
+            }
+            else
+            {
+                alert.SetTitle("Error");
+                alert.SetMessage("Please enter at least 1 number!");
+                alert.SetButton("OK", (c, ev) =>
+                {
+                    // 
+                });
+
+                alert.Show();
+            }
+
+
         }
         private void AddFromContacts_Click(object sender, System.EventArgs e)
         {
@@ -59,7 +95,6 @@ namespace App14
                 Person addedByNum = new Person(name, number);
                 if (sm.ContainsNumber(p, number) == false)
                 {
-                    //test
                     p.Add(addedByNum);
                     //take out display of number later
                     ((ArrayAdapter)lv.Adapter).Add(count + ". " + name.PadRight(20 - name.Length) + number);
