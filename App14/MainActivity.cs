@@ -38,7 +38,7 @@ namespace App14
             lv.Adapter = ad;
         }
 
-        private void Generate_Click(object sender, System.EventArgs e)
+        private async void Generate_Click(object sender, System.EventArgs e)
         {
 
             progress = new Android.App.ProgressDialog(this);
@@ -50,7 +50,7 @@ namespace App14
 
             AlertDialog.Builder dialog = new AlertDialog.Builder(this);
             AlertDialog alert = dialog.Create();
-            if (sm.SendOutSantas(p) == true)
+            if (await sm.SendOutSantas(p) == true)
             {
 
 
@@ -74,7 +74,7 @@ namespace App14
 
                 alert.Show();
             }
-
+            progress.Hide();
 
         }
         private void AddFromContacts_Click(object sender, System.EventArgs e)
