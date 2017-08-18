@@ -42,6 +42,18 @@ namespace App14
             }
             return false;
         }
+        public int Delete(List<Person> p, string num)
+        {
+            string num2 = "1" + num;
+            for (int i = 0; i < p.Count; i++)
+            {
+                if (p[i].Number == num || p[i].Number == num2)
+                {
+                    return i;
+                }
+            }
+            return -1;
+        }
         public bool SendNotificationToSquad(List<Person> p)
         {
             if (p.Count > 0)

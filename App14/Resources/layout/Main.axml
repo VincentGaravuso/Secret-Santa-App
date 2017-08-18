@@ -15,39 +15,39 @@
         android:typeface="normal"
         android:textColor="@android:color/background_light"
         android:gravity="left"
-        android:layout_marginTop="30.0dp"
-        android:layout_marginBottom="0.0dp"
+        android:layout_marginTop="15.5dp"
+        android:layout_marginBottom="5.5dp"
         android:layout_marginLeft="6.0dp"
         android:layout_marginRight="6.0dp" />
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:layout_weight="97">
+        android:layout_height="wrap_content">
         <Button
             android:text="Add from contacts"
-            android:layout_width="fill_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:id="@+id/addContactsButton"
-            android:background="@drawable/button1"
             android:textColor="#bc0909"
-            android:layout_weight="2" />
+            android:layout_weight="1"
+            android:layout_gravity="center_vertical" />
         <Button
             android:text="Add by number"
-            android:layout_width="fill_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:id="@+id/addByNumButton"
-            android:background="@drawable/button1"
             android:textColor="#bc0909"
-            android:layout_weight="2" />
+            android:layout_weight="1"
+            android:layout_marginTop="0.0dp"
+            android:layout_gravity="center_vertical" />
         <Button
             android:text="Generate and send"
-            android:layout_width="fill_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:id="@+id/generateSantaButton"
-            android:background="@drawable/button1"
             android:textColor="#bc0909"
-            android:layout_weight="2" />
+            android:layout_weight="1"
+            android:layout_gravity="center_vertical" />
     </LinearLayout>
     <LinearLayout
         android:orientation="vertical"
@@ -62,7 +62,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:id="@+id/personListView"
-            android:layout_marginTop="30.0dp"
+            android:layout_marginTop="7.0dp"
             android:layout_margin="10dp" />
     </LinearLayout>
 </LinearLayout>

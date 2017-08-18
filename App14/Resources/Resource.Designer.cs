@@ -79,26 +79,29 @@ namespace App14
 			// aapt resource value: 0x7f070004
 			public const int addButton = 2131165188;
 			
-			// aapt resource value: 0x7f07000a
-			public const int addByNumButton = 2131165194;
+			// aapt resource value: 0x7f07000c
+			public const int addByNumButton = 2131165196;
 			
-			// aapt resource value: 0x7f070009
-			public const int addContactsButton = 2131165193;
+			// aapt resource value: 0x7f07000b
+			public const int addContactsButton = 2131165195;
 			
-			// aapt resource value: 0x7f070006
-			public const int backButton = 2131165190;
+			// aapt resource value: 0x7f070008
+			public const int backButton = 2131165192;
 			
 			// aapt resource value: 0x7f070005
 			public const int cancelButton = 2131165189;
 			
-			// aapt resource value: 0x7f070008
-			public const int directionsTextView = 2131165192;
-			
-			// aapt resource value: 0x7f07000b
-			public const int generateSantaButton = 2131165195;
-			
 			// aapt resource value: 0x7f070007
-			public const int listView1 = 2131165191;
+			public const int deleteButton = 2131165191;
+			
+			// aapt resource value: 0x7f07000a
+			public const int directionsTextView = 2131165194;
+			
+			// aapt resource value: 0x7f07000d
+			public const int generateSantaButton = 2131165197;
+			
+			// aapt resource value: 0x7f070009
+			public const int listView1 = 2131165193;
 			
 			// aapt resource value: 0x7f070001
 			public const int nameEditText = 2131165185;
@@ -106,14 +109,17 @@ namespace App14
 			// aapt resource value: 0x7f070003
 			public const int numberEditText = 2131165187;
 			
-			// aapt resource value: 0x7f07000c
-			public const int personListView = 2131165196;
+			// aapt resource value: 0x7f07000e
+			public const int personListView = 2131165198;
 			
 			// aapt resource value: 0x7f070000
 			public const int textView1 = 2131165184;
 			
 			// aapt resource value: 0x7f070002
 			public const int textView2 = 2131165186;
+			
+			// aapt resource value: 0x7f070006
+			public const int updateButton = 2131165190;
 			
 			static Id()
 			{
@@ -135,10 +141,13 @@ namespace App14
 			public const int ContactItemView = 2130903041;
 			
 			// aapt resource value: 0x7f030002
-			public const int LoadList = 2130903042;
+			public const int EditPerson = 2130903042;
 			
 			// aapt resource value: 0x7f030003
-			public const int Main = 2130903043;
+			public const int LoadList = 2130903043;
+			
+			// aapt resource value: 0x7f030004
+			public const int Main = 2130903044;
 			
 			static Layout()
 			{

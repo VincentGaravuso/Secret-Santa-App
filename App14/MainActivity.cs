@@ -12,6 +12,7 @@ namespace App14
     {
         public int resultCodeAddByNumber = 100;
         public int resultCodeAddByContact = 200;
+        public int resultCodeEditPerson = 300;
         Android.App.ProgressDialog progress;
         List<Person> p = new List<Person>();
         SecretSantaManager sm = new SecretSantaManager();
@@ -36,6 +37,19 @@ namespace App14
             lv = FindViewById<ListView>(Resource.Id.personListView);
             ad = new ArrayAdapter(this, Android.Resource.Layout.SimpleListItem1, p);
             lv.Adapter = ad;
+
+            lv.ItemClick += Lv_ItemClick;
+        }
+
+        private void Lv_ItemClick(object sender, AdapterView.ItemClickEventArgs e)
+        {
+            string name = p[e.Position].Name;
+            string number = p[e.Position].Number;
+
+            var editPerson = new Intent(this, typeof(EditPersonActivity));
+            editPerson.PutExtra("name", name);
+            editPerson.PutExtra("number", number);
+            StartActivityForResult(editPerson, resultCodeEditPerson);
         }
 
         private async void Generate_Click(object sender, System.EventArgs e)
@@ -87,46 +101,79 @@ namespace App14
         }
         protected override void OnActivityResult(int requestCode, Result resultCode, Intent data)
         {
-            if (resultCode == Result.Ok)
+            if (requestCode == resultCodeAddByNumber || requestCode == resultCodeAddByContact)
             {
-                count++;
-                string name = data.GetStringExtra("name");
-                string number = data.GetStringExtra("number");
-                Person addedByNum = new Person(name, number);
-                if (sm.ContainsNumber(p, number) == false)
+                if (resultCode == Result.Ok)
                 {
-                    p.Add(addedByNum);
-                    //take out display of number later
-                    ((ArrayAdapter)lv.Adapter).Add(count + ". " + name.PadRight(20 - name.Length) + number);
-                }
-                else
-                {
-                    AlertDialog.Builder dialog = new AlertDialog.Builder(this);
-                    AlertDialog alert = dialog.Create();
-                    alert.SetTitle("Error");
-                    alert.SetMessage("This number has already been added!");
-                    alert.SetButton("OK", (c, ev) =>
+
+                    string name = data.GetStringExtra("name");
+                    string number = data.GetStringExtra("number");
+                    Person addedByNum = new Person(name, number);
+                    if (sm.ContainsNumber(p, number) == false)
                     {
+                        count++;
+                        p.Add(addedByNum);
+                        ((ArrayAdapter)lv.Adapter).Add(count + ". " + name);
+                    }
+                    else
+                    {
+                        AlertDialog.Builder dialog = new AlertDialog.Builder(this);
+                        AlertDialog alert = dialog.Create();
+                        alert.SetTitle("Error");
+                        alert.SetMessage("This number has already been added!");
+                        alert.SetButton("OK", (c, ev) =>
+                        {
                         // 
                     });
 
-                    alert.Show();
+                        alert.Show();
+                    }
+
+
+                    //jesse code
+                    //Person p2 = JsonConvert.DeserializeObject<Person>(data.GetStringExtra("person"));
+                    //p.Add(p2);
+                    //((ArrayAdapter)lv.Adapter).Add(p2);
                 }
-
-
-                //jesse code
-                //Person p2 = JsonConvert.DeserializeObject<Person>(data.GetStringExtra("person"));
-                //p.Add(p2);
-                //((ArrayAdapter)lv.Adapter).Add(p2);
             }
+            else if(requestCode == resultCodeEditPerson)
+            {
+                if (resultCode == Result.Ok)
+                {
 
+                    string name = data.GetStringExtra("name");
+                    string number = data.GetStringExtra("number");
+                    int userChoice = data.GetIntExtra("choice", 0);
+                    //userChoice defines what the user intended to do with the data:
+                    //1 = delete
+                    //2 = update
+                    if (userChoice == 0)
+                    {
+                    }
+                    else if(userChoice == 1)
+                    {
+                        int pos = sm.Delete(p, number);
+                        p.RemoveAt(pos);
+                        //Create loop to add all people in the p list to the listview (use array adapter)
+                        //Esentially just reloading the listview
+                    }
+                    else if(userChoice == 2)
+                    {
+                        //Figure out how to update a users information
+                    }
+                    {
+                    }
+
+
+                }
         }
 
-        //private void LoadList_Click(object sender, System.EventArgs e)
-        //{
-        //     allow user to load a previsouly saved list of people
-        //     StartActivity(typeof(LoadListActivity));
-        //}
-
     }
+
+    //private void LoadList_Click(object sender, System.EventArgs e)
+    //{
+    //     allow user to load a previsouly saved list of people
+    //     StartActivity(typeof(LoadListActivity));
+    //}
+
 }
