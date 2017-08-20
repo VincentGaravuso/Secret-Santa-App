@@ -41,6 +41,12 @@ namespace App14
             private void DeleteButton_Click(object sender, EventArgs e)
         {
             userChoice = 1;
+            Intent intent = new Intent();
+            intent.PutExtra("number", number);
+            intent.PutExtra("userChoice", userChoice);
+            SetResult(Result.Ok, intent);
+            Android.Widget.Toast.MakeText(this, "Deleted!", ToastLength.Short).Show();
+            this.Finish();
         }
 
         private void UpdateButton_Click(object sender, EventArgs e)

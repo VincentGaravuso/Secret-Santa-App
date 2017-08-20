@@ -111,9 +111,9 @@ namespace App14
                     Person addedByNum = new Person(name, number);
                     if (sm.ContainsNumber(p, number) == false)
                     {
+                        count++;
                         p.Add(addedByNum);
-                        updateList();
-                        //((ArrayAdapter)lv.Adapter).Add(count + ". " + name);
+                        ((ArrayAdapter)lv.Adapter).Add(count + ". " + name);
                     }
                     else
                     {
@@ -143,36 +143,41 @@ namespace App14
 
                     string name = data.GetStringExtra("name");
                     string number = data.GetStringExtra("number");
-                    int userChoice = data.GetIntExtra("userChoice",0);
+                    int userChoice = data.GetIntExtra("choice", 0);
                     //userChoice defines what the user intended to do with the data:
                     //1 = delete
                     //2 = update
-                    if (userChoice == 1)
+                    if (userChoice == 0)
+                    {
+                    }
+                    else if (userChoice == 1)
                     {
                         int pos = sm.Delete(p, number);
-                        p.RemoveAt(pos);
-                        updateList();
+                        if (pos > -1)
+                        {
+                            p.RemoveAt(pos);
+                            refreshList();
+                            //Create loop to add all people in the p list to the listview (use array adapter)
+                            //Esentially just reloading the listview
+                        }
                     }
                     else if (userChoice == 2)
                     {
-
+                        //Figure out how to update a users information
                     }
-                    
+                    {
+                    }
 
 
                 }
             }
 
         }
-        public void updateList()
+        public void refreshList()
         {
-            ad.Clear();
-            count = 0;
-            for(int i = 0;i< p.Count; i++)
+            for(int i = 0; i < p.Count; i++)
             {
-                count++;
-                ((ArrayAdapter)lv.Adapter).Add(count + ". " + p[i].Name);
-                
+                ((ArrayAdapter)lv.Adapter).Add(i + ". " + p[i].Name);
             }
         }
 

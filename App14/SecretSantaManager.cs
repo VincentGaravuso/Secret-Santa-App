@@ -54,6 +54,7 @@ namespace App14
             }
             return -1;
         }
+        
         public bool SendNotificationToSquad(List<Person> p)
         {
             if (p.Count > 0)
