@@ -124,17 +124,7 @@ namespace App14
                     int x = i + 1;
                     if (i == randomizedList.Count - 1)
                     { x = 0; }
-
-                    //if the number contains a country code this removes it
-                    for (int j = 0; j < p.Count; j++)
-                    {
-                        if (randomizedList[j].Number.Length == 11)
-                        {
-                            string num = randomizedList[j].Number;
-                            num.Substring(1);
-                            randomizedList[j].Number = num;
-                        }
-                    }
+                    
                     var to = new PhoneNumber(+1 + randomizedList[i].Number);
 
                     await Task.Run(() =>

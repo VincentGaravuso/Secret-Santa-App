@@ -49,7 +49,11 @@ namespace App14
             //Takes all extra characters such as () and spaces out of the number
             string number = phoneList[position];
             number = new String(number.ToCharArray().Where(c => Char.IsDigit(c)).ToArray());
-
+            //if the number contains a country code this removes it
+            if (number.Length == 11)
+            {
+                number = number.Substring(1);
+            }
             Intent intent = new Intent();
             intent.PutExtra("name", contactList[position]);
             intent.PutExtra("number", number);
