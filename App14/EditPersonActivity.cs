@@ -20,6 +20,7 @@ namespace App14
         int userChoice;
         EditText nameEditText;
         EditText numberEditText;
+        SecretSantaManager sm = new SecretSantaManager();
         protected override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
@@ -53,14 +54,55 @@ namespace App14
 
         private void UpdateButton_Click(object sender, EventArgs e)
         {
-            userChoice = 2;
-            Intent intent = new Intent();
-            intent.PutExtra("name", nameEditText.Text);
-            intent.PutExtra("number", numberEditText.Text);
-            intent.PutExtra("userChoice", userChoice);
-            SetResult(Result.Ok, intent);
-            Android.Widget.Toast.MakeText(this, "Updated!", ToastLength.Short).Show();
-            this.Finish();
+            string updatedName = nameEditText.Text;
+            string updatedNum = numberEditText.Text;
+            int check = sm.CheckForError(updatedName, updatedNum);
+            if (check == 0)
+            {
+                userChoice = 2;
+                Intent intent = new Intent();
+                intent.PutExtra("name", updatedName);
+                intent.PutExtra("number", updatedNum);
+                intent.PutExtra("userChoice", userChoice);
+                SetResult(Result.Ok, intent);
+                Android.Widget.Toast.MakeText(this, "Updated!", ToastLength.Short).Show();
+                this.Finish();
+            }
+            else if (check == 1)
+            {
+                AlertDialog.Builder dialog = new AlertDialog.Builder(this);
+                AlertDialog alert = dialog.Create();
+                alert.SetTitle("Error");
+                alert.SetMessage("You must enter a name.");
+                alert.SetButton("OK", (c, ev) =>
+                {
+                });
+
+                alert.Show();
+            }
+            else if (check == 2)
+            {
+                AlertDialog.Builder dialog = new AlertDialog.Builder(this);
+                AlertDialog alert = dialog.Create();
+                alert.SetTitle("Error");
+                alert.SetMessage("You must enter a number.");
+                alert.SetButton("OK", (c, ev) =>
+                {
+                });
+                alert.Show();
+            }
+            else if (check == 3)
+            {
+                AlertDialog.Builder dialog = new AlertDialog.Builder(this);
+                AlertDialog alert = dialog.Create();
+                alert.SetTitle("Error");
+                alert.SetMessage("You must enter a valid 10 digit number, including area code");
+                alert.SetButton("OK", (c, ev) =>
+                {
+                });
+
+                alert.Show();
+            }
         }
 
         private void CancelButton_Click(object sender, EventArgs e)

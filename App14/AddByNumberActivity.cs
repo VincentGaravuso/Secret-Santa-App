@@ -36,6 +36,7 @@ namespace App14
 
         private void CancelButton_Click(object sender, EventArgs e)
         {
+            SetResult(Result.Canceled);
             this.Finish();
         }
 
@@ -45,8 +46,9 @@ namespace App14
             nameEditText = FindViewById<EditText>(Resource.Id.nameEditText);
             string number = numberEditText.Text;
             string name = nameEditText.Text;
-            
-            if (CheckForError(name, number) == true)
+
+            int check = sm.CheckForError(name, number);
+            if (check == 0)
             {
                 Person p = new Person(name, number);
                 Intent intent = new Intent();
@@ -56,56 +58,7 @@ namespace App14
                 Android.Widget.Toast.MakeText(this, "Added!", ToastLength.Short).Show();
                 this.Finish();
             }
-            else
-            {
-                SetResult(Result.Canceled);
-            }
-            
-            
-            
-
-
-            // Jesse code
-            //Person p = new Person(name,number);
-            //Intent intent = new Intent();
-            //intent.PutExtra("person", JsonConvert.SerializeObject(p));
-            
-            //Add a save button to main page and ask user what they want to save the preset as
-            //var localContacts = Application.Context.GetSharedPreferences("MyContacts", FileCreationMode.Private);
-            //var contactEdit = localContacts.Edit();
-            //contactEdit.PutString("Name", name);
-            //contactEdit.PutString("Number", number);
-            //contactEdit.Commit();
-
-        }
-        private bool CheckForError(string name, string num)
-        {
-
-            //if the name and number field is filled out and the number is of standard length, continue
-            if (name != null && name != "" && num != null && num != "")
-            {
-                if (num.Length == 10)
-                {
-                    return true;
-                }
-                else if(num.Length < 10 || num.Length > 10)
-                {
-
-                    AlertDialog.Builder dialog = new AlertDialog.Builder(this);
-                    AlertDialog alert = dialog.Create();
-                    alert.SetTitle("Error");
-                    alert.SetMessage("You must enter a valid 10 digit number, including area code");
-                    alert.SetButton("OK", (c, ev) =>
-                    {
-                        // 
-                    });
-
-                    alert.Show();
-                    return false;
-                }
-            }
-            //if the name or number fields are blank, alert user
-            else if(name == null || name == "")
+            else if (check == 1)
             {
                 AlertDialog.Builder dialog = new AlertDialog.Builder(this);
                 AlertDialog alert = dialog.Create();
@@ -113,13 +66,11 @@ namespace App14
                 alert.SetMessage("You must enter a name.");
                 alert.SetButton("OK", (c, ev) =>
                 {
-                    // 
                 });
 
                 alert.Show();
-                return false;
             }
-            else if(num != null || num == "")
+            else if (check == 2)
             {
                 AlertDialog.Builder dialog = new AlertDialog.Builder(this);
                 AlertDialog alert = dialog.Create();
@@ -127,13 +78,29 @@ namespace App14
                 alert.SetMessage("You must enter a number.");
                 alert.SetButton("OK", (c, ev) =>
                 {
-                    // 
-
                 });
                 alert.Show();
-                return false;
             }
-                return false;
+            else if (check == 3)
+            {
+                AlertDialog.Builder dialog = new AlertDialog.Builder(this);
+                AlertDialog alert = dialog.Create();
+                alert.SetTitle("Error");
+                alert.SetMessage("You must enter a valid 10 digit number, including area code");
+                alert.SetButton("OK", (c, ev) =>
+                {
+                });
+
+                alert.Show();
+            }
+
+            //Add a save button to main page and ask user what they want to save the preset as
+            //var localContacts = Application.Context.GetSharedPreferences("MyContacts", FileCreationMode.Private);
+            //var contactEdit = localContacts.Edit();
+            //contactEdit.PutString("Name", name);
+            //contactEdit.PutString("Number", number);
+            //contactEdit.Commit();
+
         }
     }
 }

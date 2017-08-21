@@ -82,7 +82,6 @@ namespace App14
                 alert.SetMessage("Please enter at least 1 number!");
                 alert.SetButton("OK", (c, ev) =>
                 {
-                    // 
                 });
 
                 alert.Show();
@@ -112,7 +111,6 @@ namespace App14
                     {
                         p.Add(addedByNum);
                         updateList();
-                        //((ArrayAdapter)lv.Adapter).Add(count + ". " + name);
                     }
                     else
                     {
@@ -122,15 +120,10 @@ namespace App14
                         alert.SetMessage("This number has already been added!");
                         alert.SetButton("OK", (c, ev) =>
                         {
-                            // 
                         });
 
                         alert.Show();
                     }
-                    //jesse code
-                    //Person p2 = JsonConvert.DeserializeObject<Person>(data.GetStringExtra("person"));
-                    //p.Add(p2);
-                    //((ArrayAdapter)lv.Adapter).Add(p2);
                 }
             }
             else if (requestCode == resultCodeEditPerson)

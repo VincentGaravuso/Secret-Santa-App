@@ -30,6 +30,8 @@ namespace App14
             //person = new List<Person>();
             TwilioClient.Init(accountSid, authToken);
         }
+
+        //returns true if the number being passed in already exists in the list
         public bool ContainsNumber(List<Person> p, string num)
         {
             string num2 = "1" + num;
@@ -42,6 +44,7 @@ namespace App14
             }
             return false;
         }
+        //returns the int number of the position of a person in the list that matches with the number passed in
         public int SearchList(List<Person> p, string num)
         {
             string num2 = "1" + num;
@@ -54,8 +57,39 @@ namespace App14
             }
             return -1;
         }
-        
-        public bool SendNotificationToSquad(List<Person> p)
+        public int CheckForError(string name, string num)
+        {
+            int allValid = 0;
+            int nameError = 1;
+            int numIsEmptyError = 2;
+            int numIsInvalid = 3;
+            
+
+            //if the name and number field is filled out and the number is of standard length, continue
+            if (name != null && name != "" && num != null && num != "")
+            {
+                if (num.Length == 10)
+                {
+                    return allValid;
+                }
+                else if (num.Length < 10 || num.Length > 10)
+                {
+                    return numIsInvalid;
+                }
+            }
+            //if the name or number fields are blank, alert user
+            else if (name == null || name == "")
+            {
+                return nameError;
+            }
+            else if (num != null || num == "")
+            {
+                return numIsEmptyError;
+            }
+            return numIsEmptyError;
+        }
+    //does nothing so far
+    public bool SendNotificationToSquad(List<Person> p)
         {
             if (p.Count > 0)
             {
@@ -77,6 +111,7 @@ namespace App14
             }
             return false;
         }
+        //Sends out messages to everyone in the list being passed in
         public async Task<bool> SendOutSantas(List<Person> p)
         {
             if (p.Count > 0)
@@ -90,15 +125,17 @@ namespace App14
                     if (i == randomizedList.Count - 1)
                     { x = 0; }
 
-                    //string y = "+";
-                    //for (int j = 0; j < p.Count; j++)
-                    //{
-                    //    if (p[j].Number.Length < 11)
-                    //    {
-                    //        y = y + "1";
-                    //    }
-                    //}
-                    var to = new PhoneNumber("+1" + randomizedList[i].Number);
+                    //if the number contains a country code this removes it
+                    for (int j = 0; j < p.Count; j++)
+                    {
+                        if (randomizedList[j].Number.Length == 11)
+                        {
+                            string num = randomizedList[j].Number;
+                            num.Substring(1);
+                            randomizedList[j].Number = num;
+                        }
+                    }
+                    var to = new PhoneNumber(+1 + randomizedList[i].Number);
 
                     await Task.Run(() =>
                     {
