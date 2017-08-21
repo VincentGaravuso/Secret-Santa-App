@@ -42,7 +42,7 @@ namespace App14
             }
             return false;
         }
-        public int Delete(List<Person> p, string num)
+        public int SearchList(List<Person> p, string num)
         {
             string num2 = "1" + num;
             for (int i = 0; i < p.Count; i++)

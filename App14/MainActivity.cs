@@ -18,7 +18,6 @@ namespace App14
         SecretSantaManager sm = new SecretSantaManager();
         ArrayAdapter ad;
         ListView lv;
-        int count = 0;
         protected override void OnCreate(Bundle bundle)
         {
             base.OnCreate(bundle);
@@ -128,8 +127,6 @@ namespace App14
 
                         alert.Show();
                     }
-
-
                     //jesse code
                     //Person p2 = JsonConvert.DeserializeObject<Person>(data.GetStringExtra("person"));
                     //p.Add(p2);
@@ -140,7 +137,6 @@ namespace App14
             {
                 if (resultCode == Result.Ok)
                 {
-
                     string name = data.GetStringExtra("name");
                     string number = data.GetStringExtra("number");
                     int userChoice = data.GetIntExtra("userChoice",0);
@@ -149,17 +145,18 @@ namespace App14
                     //2 = update
                     if (userChoice == 1)
                     {
-                        int pos = sm.Delete(p, number);
+                        int pos = sm.SearchList(p, number);
                         p.RemoveAt(pos);
                         updateList();
                     }
                     else if (userChoice == 2)
                     {
+                        int pos = sm.SearchList(p, number);
+                        p[pos].Name = name;
+                        p[pos].Number = number;
+                        updateList();
 
                     }
-                    
-
-
                 }
             }
 
@@ -167,12 +164,11 @@ namespace App14
         public void updateList()
         {
             ad.Clear();
-            count = 0;
-            for(int i = 0;i< p.Count; i++)
+            int count = 0;
+            for(int i = 0;i < p.Count; i++)
             {
                 count++;
                 ((ArrayAdapter)lv.Adapter).Add(count + ". " + p[i].Name);
-                
             }
         }
 

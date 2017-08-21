@@ -18,15 +18,17 @@ namespace App14
         string name;
         string number;
         int userChoice;
+        EditText nameEditText;
+        EditText numberEditText;
         protected override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
             SetContentView(Resource.Layout.EditPerson);
             name = Intent.GetStringExtra("name");
             number = Intent.GetStringExtra("number");
-            EditText nameEditText = FindViewById<EditText>(Resource.Id.nameEditText);
+            nameEditText = FindViewById<EditText>(Resource.Id.nameEditText);
             nameEditText.Text = name;
-            EditText numberEditText = FindViewById<EditText>(Resource.Id.numberEditText);
+            numberEditText = FindViewById<EditText>(Resource.Id.numberEditText);
             numberEditText.Text = number;
 
 
@@ -52,11 +54,19 @@ namespace App14
         private void UpdateButton_Click(object sender, EventArgs e)
         {
             userChoice = 2;
+            Intent intent = new Intent();
+            intent.PutExtra("name", nameEditText.Text);
+            intent.PutExtra("number", numberEditText.Text);
+            intent.PutExtra("userChoice", userChoice);
+            SetResult(Result.Ok, intent);
+            Android.Widget.Toast.MakeText(this, "Updated!", ToastLength.Short).Show();
+            this.Finish();
         }
 
         private void CancelButton_Click(object sender, EventArgs e)
         {
-            throw new NotImplementedException();
+            SetResult(Result.Canceled);
+            this.Finish();
         }
 
     }

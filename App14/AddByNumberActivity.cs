@@ -53,7 +53,7 @@ namespace App14
                 intent.PutExtra("name", p.Name);
                 intent.PutExtra("number", p.Number);
                 SetResult(Result.Ok, intent);
-                Android.Widget.Toast.MakeText(this, "Added", ToastLength.Short).Show();
+                Android.Widget.Toast.MakeText(this, "Added!", ToastLength.Short).Show();
                 this.Finish();
             }
             else
