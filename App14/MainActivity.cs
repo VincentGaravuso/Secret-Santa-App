@@ -7,7 +7,7 @@ using Newtonsoft.Json;
 
 namespace App14
 {
-    [Activity(Label = "App14", MainLauncher = true, Icon = "@drawable/icon")]
+    [Activity(Theme = "@android:style/Theme.Holo.NoActionBar.Fullscreen", Label = "App14", MainLauncher = true, Icon = "@drawable/icon")]
     public class MainActivity : Activity
     {
         public int resultCodeAddByNumber = 100;
